@@ -3,7 +3,7 @@ using namespace std;
 
 /*
 problem:-https://cses.fi/problemset/task/1070/
-
+print permutation of first n natural numbers such that no adjacent numbers have difference of 1
 idea:-
 every consecutive odd or even number diffrence is 2
 */
