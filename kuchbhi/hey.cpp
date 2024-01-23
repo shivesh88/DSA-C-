@@ -1,37 +1,51 @@
 #include<bits/stdc++.h>
 using namespace std;
-int mod=1000000007;
-int arraydescription(int n,int m,vector<int>&arr,int i){
-    if(i==n){
-        return 1;
+int distance(vector<vector<int>> &a, vector<int> &b, vector<int> &c, int n,int m)
+{
+    if(b==c){
+        return 0;
     }
-    int count=0;
-    if(arr[i]!=0){
-        return arraydescription(n,m,arr,i+1);
+    if(c[0]<0||c[0]>=n||c[1]>=m||c[1]<0){
+        return -1;
     }
-    for(int k=1;k<=m;k++){
-        arr[i]=k;
-        if(i==0&&abs(arr[i]-arr[i+1])<=1){
-            count=count+arraydescription(n,m,arr,i+1)%mod;
-        }
-        else if(i==n-1&&abs(arr[i]-arr[i-1])<=1){
-            count=count+arraydescription(n,m,arr,i+1)%mod;
-        }
-        else if(abs(arr[i]-arr[i-1])<=1&&abs(arr[i]-arr[i+1])<=1){
-            count=count+arraydescription(n,m,arr,i+1)%mod;
-        }
+    if(a[b[0]][b[1]]==1||a[c[0]][c[1]]==1){
+        return -1;
     }
+    int shortest=-1;
     
-    return count;
+
+
+
+    c={c[0]-1,c[1]};
+    int d = distance(a,b,c,n,m);
+    if(d!=-1||d<shortest)
+    shortest=d;
+
+
+    c={c[0]+1,c[1]};
+    d=distance(a,b,c,n,m);
+    if(d!=-1&&(shortest==-1||d<shortest))
+    shortest=d;
+
+
+    c={c[0],c[1]-1};
+    d=distance(a,b,c,n,m);
+    if(d!=-1&&(shortest==-1||d<shortest))
+    shortest=d;
+
+
+    c={c[0],c[1]+1};
+    d=distance(a,b,c,n,m);
+    if(d!=-1&&(shortest==-1||d<shortest))
+    shortest=d;
+    return shortest;
 }
-int main(){
-    // int n,m;
-    // cin>>n>>m;
-    // ;
-    // for(auto&x:arr){
-    //     cin>>x;
-    // }
-    int n=10,m=3;
-    vector<int>arr={0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-    cout<<arraydescription(n,m,arr,0);
+int main() {
+    vector<vector<int> > A={{1,1,0,1},{0,0,0,1},{1,0,0,1},{0,0,1,0}};
+    vector<int> B={1,1};
+    vector<int> C={2,1};
+    if(A[C[0]][C[1]]==0&&A[B[0]][B[1]]==0){
+        cout<< distance(A,B,C,(int)A.size(),(int)A[0].size());
+    }
+    else cout<< -1;
 }
